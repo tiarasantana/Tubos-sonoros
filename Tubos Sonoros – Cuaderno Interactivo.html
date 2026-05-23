@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tubos Sonoros – Cuaderno Interactivo</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cover: #d63a6e;
+  --cover-dark: #a02050;
+  --cover-light: #e8608e;
+  --spiral: #2a9d8f;
+  --spiral-dark: #1a7a6e;
+  --page: #fdfaf4;
+  --page2: #f7f3e9;
+  --line: #c8d8f0;
+  --line2: #dde8f8;
+  --margin: #f0a0b0;
+  --ink: #2a2a3a;
+  --ink-blue: #1a4a8a;
+  --ink-cyan: #0077aa;
+  --ink-red: #c0392b;
+  --ink-teal: #0d7a6a;
+  --ink-orange: #d4690a;
+  --highlight: #fff4a0;
+  --highlight2: #d0f0e8;
+  --shadow: rgba(0,0,0,0.18);
+}
+*, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+
+body {
+  background: #8a9bb0;
+  background-image:
+    radial-gradient(ellipse at 30% 20%, #c0cad8 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 80%, #7a8898 0%, transparent 60%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 28px 10px 60px;
+  font-family: 'Nunito', sans-serif;
+}
+
+/* ═══ DESK ═══ */
+.desk-wrap {
+  width: min(98vw, 1100px);
+  filter: drop-shadow(0 24px 70px rgba(0,0,0,0.5)) drop-shadow(0 6px 16px rgba(0,0,0,0.3));
+}
+
+/* ═══ NOTEBOOK ═══ */
+.notebook {
+  width: 100%;
+  display: flex;
+  position: relative;
+  border-radius: 6px 18px 18px 6px;
+}
+
+/* ── LEFT COVER ── */
+.left-cover {
+  width: 44px;
+  border-radius: 6px 0 0 6px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, var(--cover-light) 0%, var(--cover) 45%, var(--cover-dark) 100%);
+  position: relative;
+  overflow: hidden;
+}
+.left-cover::before {
+  content:''; position:absolute; inset:0;
+  background: repeating-linear-gradient(180deg, transparent 0,transparent 3px, rgba(255,255,255,0.07) 3px, rgba(255,255,255,0.07) 4px);
+}
+.left-cover::after {
+  content:''; position:absolute; inset:0;
+  background: linear-gradient(90deg, rgba(255,255,255,0.14) 0%, transparent 35%, rgba(0,0,0,0.1) 80%);
+}
+
+/* ── LEFT PAGE ── */
+.page-left {
+  flex: 1;
+  background: var(--page);
+  position: relative;
+  overflow: hidden;
+  min-height: 660px;
+}
+/* ruled lines */
+.page-left::before {
+  content:''; position:absolute; inset:0; pointer-events:none; z-index:0;
+  background: repeating-linear-gradient(180deg, transparent 0, transparent 27px, var(--line) 27px, var(--line) 28.5px);
+}
+/* margin */
+.page-left::after {
+  content:''; position:absolute; top:0; bottom:0; left:54px; width:1.5px;
+  background: var(--margin); opacity:.65; z-index:1;
+}
+.page-content {
+  position:relative; z-index:2;
+  padding: 18px 20px 18px 62px;
+  height: 100%;
+}
+
+/* ── SPIRAL ── */
+.spiral-wrap {
+  width: 38px; flex-shrink:0;
+  display:flex; flex-direction:column; align-items:center;
+  padding-top:14px; gap:1px; z-index:10; position:relative;
+  background: linear-gradient(180deg, #e8e0d8 0%, #d8d0c8 100%);
+  border-left:1px solid rgba(0,0,0,0.08); border-right:1px solid rgba(0,0,0,0.08);
+}
+.coil {
+  width:36px; height:21px; border-radius:50%;
+  border:3px solid var(--spiral-dark);
+  background: linear-gradient(135deg, var(--spiral-dark) 0%, var(--spiral) 45%, #6dddd4 70%, var(--spiral) 100%);
+  box-shadow: inset 0 2px 3px rgba(255,255,255,0.35), 0 2px 5px rgba(0,0,0,0.28);
+  flex-shrink:0; position:relative;
+}
+.coil::after {
+  content:''; position:absolute; left:3px; top:50%; transform:translateY(-50%);
+  width:calc(100%-6px); height:2.5px; background:rgba(0,0,0,0.12); border-radius:2px;
+}
+
+/* ── RIGHT PAGE ── */
+.page-right-outer {
+  flex:1; position:relative; overflow:hidden;
+  background: var(--page2);
+}
+/* subtle age effect */
+.page-right-outer::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:5px;
+  background:linear-gradient(180deg,rgba(0,0,0,0.04),transparent);
+}
+.page-right-inner {
+  position:relative; height:100%;
+}
+/* ruled lines right */
+.page-right-inner::before {
+  content:''; position:absolute; inset:0; pointer-events:none; z-index:0;
+  background: repeating-linear-gradient(180deg, transparent 0, transparent 27px, var(--line2) 27px, var(--line2) 28.5px);
+}
+/* margin right */
+.page-right-inner::after {
+  content:''; position:absolute; top:0; bottom:0; right:44px; width:1.5px;
+  background: var(--margin); opacity:.45; z-index:1;
+}
+.page-content-right {
+  position:relative; z-index:2;
+  padding: 18px 52px 18px 20px;
+  height:100%;
+}
+
+/* ── RIGHT COVER ── */
+.right-cover {
+  width: 44px; flex-shrink:0;
+  border-radius: 0 18px 18px 0;
+  background: linear-gradient(180deg, var(--cover-light) 0%, var(--cover) 45%, var(--cover-dark) 100%);
+  position:relative; overflow:hidden;
+}
+.right-cover::before {
+  content:''; position:absolute; inset:0;
+  background: repeating-linear-gradient(180deg, transparent 0,transparent 3px, rgba(255,255,255,0.07) 3px, rgba(255,255,255,0.07) 4px);
+  border-radius:0 18px 18px 0;
+}
+.right-cover::after {
+  content:''; position:absolute; inset:0;
+  background: linear-gradient(90deg, rgba(0,0,0,0.1) 0%, transparent 40%, rgba(255,255,255,0.1) 100%);
+}
+
+/* ── PAGES SYSTEM ── */
+.nb-page { display:none; height:100%; }
+.nb-page.active { display:block; }
+
+/* ── COVER PAGE ── */
+.cover-inner {
+  width:100%; height:100%; min-height:660px;
+  background: linear-gradient(155deg,#1a3a7a 0%,#0d2050 55%, #080f28 100%);
+  position:relative; overflow:hidden;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:30px 36px; text-align:center;
+}
+.cover-inner::before {
+  content:''; position:absolute; inset:0;
+  background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0z' fill='none' stroke='%2300d4ff' stroke-width='0.2' opacity='0.18'/%3E%3C/svg%3E");
+}
+.cover-glow { position:absolute; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle,rgba(0,212,255,0.15),transparent 70%); top:50%; left:50%; transform:translate(-50%,-50%); }
+.c-icon { font-size:4rem; position:relative; filter:drop-shadow(0 0 20px rgba(0,212,255,.7)); margin-bottom:14px; }
+.c-title { font-family:'Caveat',cursive; font-size:3rem; font-weight:700; color:#fff; line-height:1.05; position:relative; text-shadow:0 0 30px rgba(0,212,255,.4); }
+.c-sub { font-family:'Caveat',cursive; font-size:1.15rem; color:#90d8f0; margin:8px 0 14px; position:relative; }
+.c-badge { background:linear-gradient(90deg,#1a6ef5,#00d4ff); color:#fff; font-size:.68rem; font-weight:800; letter-spacing:2px; text-transform:uppercase; padding:5px 16px; border-radius:20px; margin-bottom:14px; position:relative; display:inline-block; }
+.c-author { font-family:'Caveat',cursive; font-size:1rem; color:#a0c8e0; position:relative; line-height:1.5; }
+.c-author strong { color:#fff; font-size:1.15rem; }
+
+/* TOC right page on cover */
+.toc-right {
+  display:flex; flex-direction:column; justify-content:center; height:100%; padding:24px 52px 24px 20px;
+}
+.toc-title { font-family:'Caveat',cursive; color:var(--cover); font-size:1.4rem; font-weight:700; border-bottom:2px solid var(--cover); padding-bottom:6px; margin-bottom:14px; }
+.toc-item {
+  display:flex; align-items:center; gap:10px; padding:7px 0;
+  border-bottom:1px solid rgba(0,0,0,0.06); cursor:pointer; transition:.15s;
+  font-family:'Caveat',cursive; font-size:1rem; color:var(--ink);
+}
+.toc-item:hover { color:var(--cover); padding-left:5px; }
+.toc-item:hover .tn { background:var(--cover); color:#fff; }
+.tn {
+  width:24px; height:24px; border-radius:50%; background:rgba(214,58,110,0.1);
+  border:1.5px solid var(--cover); font-size:.72rem; color:var(--cover);
+  display:flex; align-items:center; justify-content:center; font-weight:700; flex-shrink:0; transition:.15s;
+}
+.start-nb {
+  margin-top:16px; width:100%; background:linear-gradient(90deg,var(--cover-dark),var(--cover));
+  color:#fff; border:none; padding:11px; border-radius:10px;
+  font-family:'Nunito',sans-serif; font-weight:800; font-size:.9rem; cursor:pointer;
+  box-shadow:0 4px 16px rgba(214,58,110,0.4); transition:.2s;
+}
+.start-nb:hover { transform:scale(1.02); }
+
+/* ── CONTENT TYPOGRAPHY ── */
+.pg-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:12px; padding-bottom:5px; border-bottom:2px solid var(--cover); }
+.sec-label { font-family:'Caveat',cursive; font-size:.95rem; color:var(--cover); font-weight:700; letter-spacing:.5px; }
+.pg-num { font-family:'Caveat',cursive; font-size:.85rem; color:#bbb; }
+.nb-title { font-family:'Caveat',cursive; font-size:1.55rem; font-weight:700; color:var(--ink-blue); line-height:1.2; margin-bottom:9px; }
+.nb-sub { font-family:'Caveat',cursive; font-size:1.05rem; color:var(--ink-teal); font-weight:700; margin:10px 0 5px; display:block; }
+p.nb { font-size:.81rem; line-height:1.65; color:var(--ink); margin-bottom:7px; }
+p.nb strong { color:var(--ink-blue); }
+
+/* sticky notes */
+.sticky { background:var(--highlight); border-left:3.5px solid #e0b000; padding:7px 10px; margin:8px 0; border-radius:0 6px 6px 0; font-family:'Caveat',cursive; font-size:.9rem; color:#5a3f00; box-shadow:2px 2px 6px rgba(0,0,0,0.1); transform:rotate(-0.4deg); }
+.sticky.teal { background:var(--highlight2); border-color:#0d7a6a; color:#034a3e; }
+.sticky.pink { background:#ffe0ee; border-color:var(--cover); color:#7a0030; transform:rotate(0.3deg); }
+
+/* formula */
+.formula-nb { background:rgba(26,74,138,0.07); border:1.5px solid rgba(26,74,138,0.22); border-radius:8px; padding:9px 14px; margin:8px 0; text-align:center; }
+.formula-nb .f { font-family:'Caveat',cursive; font-size:1.3rem; color:var(--ink-blue); font-weight:700; }
+.formula-nb .fl { font-size:.72rem; color:#666; margin-top:2px; }
+.formula-nb.orange { background:rgba(212,105,10,0.06); border-color:rgba(212,105,10,0.22); }
+.formula-nb.orange .f { color:var(--ink-orange); }
+
+/* notebox */
+.notebox { background:rgba(13,122,106,0.06); border-left:3px solid var(--ink-teal); padding:7px 11px; margin:6px 0; border-radius:0 6px 6px 0; font-size:.78rem; line-height:1.5; color:var(--ink); }
+.notebox strong { color:var(--ink-teal); }
+.notebox.blue { background:rgba(26,74,138,0.06); border-color:var(--ink-blue); }
+.notebox.blue strong { color:var(--ink-blue); }
+
+/* tables */
+.nb-table { width:100%; border-collapse:collapse; margin:7px 0; font-size:.74rem; }
+.nb-table th { background:var(--cover); color:#fff; padding:5px 7px; text-align:left; font-weight:700; }
+.nb-table td { padding:4px 7px; border-bottom:1px solid #dde; color:var(--ink); }
+.nb-table tr:nth-child(even) td { background:rgba(0,0,0,0.015); }
+.nb-table td:first-child { font-weight:700; color:var(--ink-blue); }
+
+/* instrument row */
+.instr-row { display:flex; gap:7px; margin:6px 0; flex-wrap:wrap; }
+.instr-card { flex:1; min-width:85px; background:#fff; border:1px solid #dde; border-radius:8px; padding:7px 9px; box-shadow:1px 1px 4px rgba(0,0,0,0.07); }
+.ic-name { font-weight:800; font-size:.76rem; color:var(--ink-blue); }
+.ic-type { font-size:.67rem; color:#888; margin:2px 0; }
+.ic-badge { display:inline-block; padding:2px 7px; border-radius:10px; font-size:.65rem; font-weight:700; margin-top:3px; }
+.todos { background:#d0f0e8; color:#0d6a54; }
+.impares { background:#ffd8e4; color:#9a1a40; }
+
+/* simulator */
+.sim-wrap { background:#fff; border:1.5px solid #dde; border-radius:9px; overflow:hidden; margin:8px 0; box-shadow:1px 2px 7px rgba(0,0,0,0.07); }
+.sim-head { background:linear-gradient(90deg,var(--cover),#e8608e); padding:5px 12px; font-size:.68rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:#fff; }
+.sim-body { padding:10px; }
+.sim-lbl { font-size:.65rem; font-weight:800; color:#888; letter-spacing:1px; text-transform:uppercase; margin-bottom:3px; }
+.tube-type-row { display:flex; gap:5px; margin-bottom:8px; }
+.tbtn { flex:1; background:#f2f4fa; border:1.5px solid #dde; color:#666; padding:4px 6px; border-radius:6px; cursor:pointer; font-family:'Nunito',sans-serif; font-size:.72rem; font-weight:700; transition:.15s; text-align:center; }
+.tbtn.active { background:linear-gradient(90deg,var(--cover),#e8608e); color:#fff; border-color:transparent; }
+#tubeCanvas,#tubeCanvas2 { width:100%; height:78px; display:block; border-radius:5px; background:#f8fbff; border:1px solid #eee; }
+.harm-row { display:flex; align-items:center; gap:7px; margin-top:7px; }
+.hbtn { width:24px; height:24px; border-radius:50%; background:#f2f4fa; border:1.5px solid #dde; color:var(--cover); cursor:pointer; font-size:.9rem; display:flex; align-items:center; justify-content:center; font-weight:700; transition:.15s; }
+.hbtn:hover { background:var(--cover); color:#fff; }
+#harmNum,#harmNum2 { background:#f2f4fa; border:1.5px solid #dde; color:var(--ink-blue); font-family:'Caveat',cursive; font-size:1.05rem; padding:2px 10px; border-radius:5px; text-align:center; min-width:36px; font-weight:700; }
+
+/* flute */
+.flute-sim-wrap { background:#fff; border:1.5px solid #dde; border-radius:9px; overflow:hidden; margin:7px 0; box-shadow:1px 2px 7px rgba(0,0,0,0.07); }
+.flute-head { background:linear-gradient(90deg,#1a3a7a,#1a6ef5); padding:6px 12px; display:flex; align-items:center; justify-content:space-between; }
+.flute-head-title { font-size:.72rem; font-weight:800; color:#fff; }
+.act-btn { background:linear-gradient(90deg,#e040fb,var(--cover)); color:#fff; border:none; padding:4px 12px; border-radius:18px; font-family:'Nunito',sans-serif; font-weight:700; font-size:.68rem; cursor:pointer; transition:.15s; }
+.act-btn.done { background:linear-gradient(90deg,#22c55e,#16a34a); }
+.flute-body { padding:10px; }
+.hole-c { cursor:pointer; transition:.12s; stroke-width:2; }
+.hole-c.open { fill:#2a5a2a; stroke:#4ade80; }
+.hole-c.closed { fill:#c8a060; stroke:#8b6014; }
+.hole-c:hover { stroke-width:3; opacity:.82; }
+.note-disp { font-family:'Caveat',cursive; font-size:1.9rem; font-weight:700; color:var(--ink-blue); text-align:center; margin:4px 0 0; }
+.freq-disp { text-align:center; font-size:.68rem; color:#888; margin-bottom:6px; }
+.play-btn { width:100%; background:linear-gradient(90deg,var(--ink-blue),var(--ink-cyan)); color:#fff; border:none; padding:8px; border-radius:7px; font-family:'Nunito',sans-serif; font-weight:800; font-size:.8rem; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; margin-bottom:7px; transition:.15s; }
+.play-btn:hover { opacity:.9; }
+.play-btn.playing { background:linear-gradient(90deg,#e040fb,var(--cover)); }
+.scale-row { display:flex; gap:3px; flex-wrap:wrap; justify-content:center; }
+.sc-btn { background:#f2f4fa; border:1px solid #ccd; color:#446; padding:3px 9px; border-radius:12px; cursor:pointer; font-family:'Caveat',cursive; font-size:.88rem; font-weight:700; transition:.1s; }
+.sc-btn:hover,.sc-btn.active { background:var(--cover); color:#fff; border-color:var(--cover); }
+.hint-nb { font-size:.64rem; color:#aaa; text-align:center; margin-top:5px; font-style:italic; }
+
+/* wave vis */
+#waveVis { width:100%; height:46px; display:block; border-radius:5px; background:#f8fbff; border:1px solid #eee; margin:5px 0; }
+
+/* page footer */
+.page-footer { position:absolute; bottom:8px; font-family:'Caveat',cursive; font-size:.82rem; color:#bbb; z-index:3; }
+
+/* ═══ NAV ═══ */
+.nb-nav { width:min(98vw,1100px); display:flex; align-items:center; justify-content:space-between; margin-top:14px; padding:0 52px; }
+.nav-btn { background:var(--cover); color:#fff; border:none; padding:9px 26px; border-radius:30px; font-family:'Nunito',sans-serif; font-weight:700; font-size:.85rem; cursor:pointer; box-shadow:0 4px 14px rgba(214,58,110,0.35); transition:.2s; }
+.nav-btn:hover { background:var(--cover-dark); transform:translateY(-2px); }
+.nav-btn:disabled { opacity:.3; cursor:default; transform:none; }
+.page-dots { display:flex; gap:7px; }
+.pdot { width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,0.45); border:2px solid var(--cover); cursor:pointer; transition:.2s; }
+.pdot.active { background:var(--cover); }
+
+@media(max-width:680px){
+  body{padding:8px 2px 40px;}
+  .left-cover,.right-cover{width:18px;}
+  .spiral-wrap{width:28px;} .coil{width:26px;}
+  .page-content{padding:10px 8px 10px 24px;}
+  .page-content-right{padding:10px 22px 10px 8px;}
+  .page-left::after{left:22px;}
+  .nb-title{font-size:1.2rem;}
+  .nb-nav{padding:0 10px;}
+}
+</style>
+</head>
+<body>
+
+<div class="desk-wrap">
+<div class="notebook">
+
+  <!-- LEFT COVER -->
+  <div class="left-cover"></div>
+
+  <!-- ═══ LEFT PAGE ═══ -->
+  <div class="page-left" id="leftPage">
+
+    <!-- P0 LEFT: portada -->
+    <div class="nb-page active" id="p0L">
+      <div class="cover-inner">
+        <div class="cover-glow"></div>
+        <div class="c-icon">🌬️</div>
+        <div class="c-title">TUBOS<br>SONOROS</div>
+        <div class="c-sub">Física Acústica e Instrumentos de Viento</div>
+        <div class="c-badge">⚡ Física Interactiva</div>
+        <div class="c-author">Presentado por<br><strong>Tiara Santana</strong><br><span style="font-size:.85rem;color:#7aaccf">Msc. Néstor Fabio Montoya Palacios</span></div>
+      </div>
+    </div>
+
+    <!-- P1 LEFT: Introducción -->
+    <div class="nb-page" id="p1L">
+      <div class="page-content">
+        <div class="pg-header"><span class="sec-label">✏️ Sección 01</span><span class="pg-num">1</span></div>
+        <div class="nb-title">1. Introducción</div>
+        <p class="nb">Los tubos sonoros son estructuras cilíndricas o cónicas que contienen una columna de gas capaz de producir sonido. <strong>El cuerpo sonoro no es el tubo en sí, sino la columna de aire que éste contiene.</strong></p>
+        <p class="nb">El principio físico es el mismo en todos: cuando el aire entra en vibración, se generan <strong>ondas estacionarias</strong> que determinan las frecuencias del sonido producido.</p>
+        <div class="sticky">✨ Los instrumentos de viento más antiguos son flautas de hace ~40,000 años hechas de huesos.</div>
+        <span class="nb-sub">2. Ondas Estacionarias en Tubos</span>
+        <p class="nb">La superposición de la onda incidente con la reflejada produce puntos de amplitud máxima (<strong>vientres o antinodos</strong>) y de amplitud nula (<strong>nodos</strong>).</p>
+        <div class="notebox blue">
+          <strong>Extremo abierto:</strong> presión = atmosférica → Vientre (moléculas oscilan).<br>
+          <strong>Extremo cerrado:</strong> pared impide el movimiento → Nodo (moléculas en reposo).
+        </div>
+        <canvas id="waveVis"></canvas>
+        <div class="page-footer" style="left:62px">1</div>
+      </div>
+    </div>
+
+    <!-- P2 LEFT: Tubo Abierto -->
+    <div class="nb-page" id="p2L">
+      <div class="page-content">
+        <div class="pg-header"><span class="sec-label">✏️ Sección 02</span><span class="pg-num">3</span></div>
+        <div class="nb-title">3. Tubo Abierto (ambos extremos)</div>
+        <p class="nb">Se forman <strong>vientres (antinodos)</strong> en las dos aberturas. La onda estacionaria más simple tiene <strong>½ longitud de onda</strong> dentro del tubo.</p>
+        <svg viewBox="0 0 260 80" xmlns="http://www.w3.org/2000/svg" style="width:100%;margin:5px 0">
+          <defs><linearGradient id="wga" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#1a6ef5"/><stop offset="100%" stop-color="#0099cc"/></linearGradient></defs>
+          <rect x="4" y="12" width="252" height="9" rx="2" fill="rgba(26,110,245,0.1)" stroke="#aac4ee" stroke-width="1"/>
+          <rect x="4" y="59" width="252" height="9" rx="2" fill="rgba(26,110,245,0.1)" stroke="#aac4ee" stroke-width="1"/>
+          <path d="M 4 40 Q 130 8 256 40" stroke="url(#wga)" stroke-width="2.2" fill="none"/>
+          <path d="M 4 40 Q 130 72 256 40" stroke="url(#wga)" stroke-width="2.2" fill="none" opacity=".35"/>
+          <text x="1" y="10" fill="#1a6ef5" font-size="8" font-family="Caveat" font-weight="700">A</text>
+          <text x="122" y="10" fill="#888" font-size="8" font-family="Caveat">N</text>
+          <text x="246" y="10" fill="#1a6ef5" font-size="8" font-family="Caveat" font-weight="700">A</text>
+          <text x="220" y="48" fill="#666" font-size="9" font-family="Caveat">n = 1</text>
+        </svg>
+        <p class="nb">Produce <strong>todos los armónicos</strong> (pares e impares). Longitud de onda: <strong>λₙ = 2L/n</strong>.</p>
+        <div class="formula-nb">
+          <div class="f">fₙ = n · (v / 2L)</div>
+          <div class="fl">n = 1, 2, 3, 4 … (todos los enteros positivos)</div>
+        </div>
+        <table class="nb-table">
+          <tr><th>n</th><th>Armónico</th><th>Frecuencia</th></tr>
+          <tr><td>1</td><td>Fundamental</td><td>f₁ = v/2L</td></tr>
+          <tr><td>2</td><td>2.° armónico</td><td>f₂ = 2v/2L</td></tr>
+          <tr><td>3</td><td>3.er armónico</td><td>f₃ = 3v/2L</td></tr>
+          <tr><td>n</td><td>n-ésimo</td><td>fₙ = n(v/2L)</td></tr>
+        </table>
+        <div class="page-footer" style="left:62px">3</div>
+      </div>
+    </div>
+
+    <!-- P3 LEFT: Tubo Cerrado -->
+    <div class="nb-page" id="p3L">
+      <div class="page-content">
+        <div class="pg-header"><span class="sec-label">✏️ Sección 03</span><span class="pg-num">5</span></div>
+        <div class="nb-title">4. Tubo Cerrado (un extremo)</div>
+        <p class="nb"><strong>Nodo</strong> en el extremo cerrado y <strong>vientre</strong> en el abierto. Esta asimetría restringe los modos de vibración.</p>
+        <svg viewBox="0 0 260 72" xmlns="http://www.w3.org/2000/svg" style="width:100%;margin:5px 0">
+          <defs><linearGradient id="wgb" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#d4690a"/><stop offset="100%" stop-color="#e8608e"/></linearGradient></defs>
+          <rect x="4" y="10" width="252" height="8" rx="2" fill="rgba(212,105,10,0.1)" stroke="#f0b080" stroke-width="1"/>
+          <rect x="4" y="54" width="252" height="8" rx="2" fill="rgba(212,105,10,0.1)" stroke="#f0b080" stroke-width="1"/>
+          <rect x="4" y="10" width="10" height="52" fill="rgba(212,105,10,0.28)" stroke="#d4690a" stroke-width="1"/>
+          <path d="M 14 36 Q 130 6 256 36" stroke="url(#wgb)" stroke-width="2.2" fill="none"/>
+          <path d="M 14 36 Q 130 66 256 36" stroke="url(#wgb)" stroke-width="2.2" fill="none" opacity=".35"/>
+          <text x="3" y="9" fill="#888" font-size="8" font-family="Caveat">N</text>
+          <text x="246" y="9" fill="#d4690a" font-size="8" font-family="Caveat" font-weight="700">A</text>
+          <text x="218" y="44" fill="#666" font-size="9" font-family="Caveat">n = 1</text>
+        </svg>
+        <div class="formula-nb orange">
+          <div class="f">fₙ = (2n−1) · (v / 4L)</div>
+          <div class="fl">n = 1, 2, 3… → solo armónicos impares (1°, 3°, 5°…)</div>
+        </div>
+        <div class="sticky pink">⚠️ Solo se producen armónicos impares. A igual longitud, suena una octava más grave que el tubo abierto.</div>
+        <span class="nb-sub">5. Comparación Rápida</span>
+        <table class="nb-table">
+          <tr><th>Característica</th><th>Abierto</th><th>Cerrado</th></tr>
+          <tr><td>Condición ext.</td><td>V – V</td><td>N – V</td></tr>
+          <tr><td>Fundamental</td><td>v/2L</td><td>v/4L</td></tr>
+          <tr><td>Armónicos</td><td>Todos</td><td>Impares</td></tr>
+          <tr><td>Timbre</td><td>Brillante</td><td>"Hueco"</td></tr>
+        </table>
+        <div class="page-footer" style="left:62px">5</div>
+      </div>
+    </div>
+
+    <!-- P4 LEFT: Instrumentos -->
+    <div class="nb-page" id="p4L">
+      <div class="page-content">
+        <div class="pg-header"><span class="sec-label">✏️ Sección 04</span><span class="pg-num">7</span></div>
+        <div class="nb-title">7. Tubos como Instrumentos</div>
+        <span class="nb-sub">7.1 Flauta</span>
+        <p class="nb">Tubo cilíndrico abierto. Sus agujeros cambian la longitud efectiva. Produce <strong>todos los armónicos</strong>: sonido brillante y limpio.</p>
+        <span class="nb-sub">7.2 Clarinete</span>
+        <p class="nb">La boquilla = extremo cerrado → solo <strong>armónicos impares</strong>. Timbre oscuro y "hueco".</p>
+        <span class="nb-sub">7.3 Saxofón</span>
+        <p class="nb">Tubo cónico cerrado → se comporta como tubo abierto: <strong>todos los armónicos</strong>. Timbre rico y potente.</p>
+        <span class="nb-sub">7.4 Trompeta / Metales</span>
+        <p class="nb">Labios como extremo cerrado. Combina cilindro + cono + campana. Armónicos brillantes por tensión labial y válvulas.</p>
+        <div class="sticky teal">📌 Regla: Tubo cónico cerrado ≈ Tubo abierto (todos los armónicos).</div>
+        <span class="nb-sub">7.5 Tubos de Órgano</span>
+        <div class="notebox">🎹 <strong>De labio abiertos:</strong> brillantes, todos los armónicos.</div>
+        <div class="notebox">🎹 <strong>De labio tapados:</strong> oscuros, solo armónicos impares.</div>
+        <div class="page-footer" style="left:62px">7</div>
+      </div>
+    </div>
+
+    <!-- P5 LEFT: Simulador Flauta -->
+    <div class="nb-page" id="p5L">
+      <div class="page-content">
+        <div class="pg-header"><span class="sec-label">🎵 Sección 05</span><span class="pg-num">9</span></div>
+        <div class="nb-title">Simulador de Flauta Dulce</div>
+        <p class="nb">La <strong>flauta dulce</strong> es un aerófono de bisel. Los agujeros cambian la <em>longitud efectiva</em> de la columna de aire.</p>
+        <div class="sticky">🎵 Todos tapados = tubo máximo → Do (nota más grave).</div>
+        <div class="flute-sim-wrap">
+          <div class="flute-head">
+            <span class="flute-head-title">🎶 Flauta Dulce Soprano</span>
+            <button class="act-btn" id="activateBtn" onclick="activateAudio()">▶ Activar Sonido</button>
+          </div>
+          <div class="flute-body">
+            <svg id="fluteSvg" viewBox="0 0 340 60" xmlns="http://www.w3.org/2000/svg" style="width:100%;margin:4px 0 8px">
+              <defs>
+                <linearGradient id="fg" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#d4a017"/>
+                  <stop offset="50%" stop-color="#8b6914"/>
+                  <stop offset="100%" stop-color="#5a4208"/>
+                </linearGradient>
+              </defs>
+              <rect x="8" y="20" width="324" height="20" rx="10" fill="url(#fg)" stroke="#6a4a08" stroke-width="1.5"/>
+              <ellipse cx="14" cy="30" rx="10" ry="12" fill="#c49a10" stroke="#6a4a08" stroke-width="1.5"/>
+              <ellipse cx="14" cy="26" rx="4" ry="3" fill="#3a2800"/>
+              <ellipse cx="334" cy="30" rx="8" ry="10" fill="#c49a10" stroke="#6a4a08" stroke-width="1.5"/>
+              <circle id="h0" class="hole-c closed" cx="78"  cy="30" r="7"/>
+              <circle id="h1" class="hole-c closed" cx="112" cy="30" r="7"/>
+              <circle id="h2" class="hole-c closed" cx="148" cy="30" r="7"/>
+              <circle id="h3" class="hole-c closed" cx="184" cy="30" r="7"/>
+              <circle id="h4" class="hole-c closed" cx="218" cy="30" r="7"/>
+              <circle id="h5" class="hole-c closed" cx="252" cy="30" r="7"/>
+              <circle id="h6" class="hole-c closed" cx="286" cy="30" r="7"/>
+            </svg>
+            <div class="note-disp" id="noteDisplay">Do</div>
+            <div class="freq-disp" id="freqDisplay">523.25 Hz · Todos los agujeros cerrados</div>
+            <button class="play-btn" id="playBtn" onclick="playCurrentNote()">▶ Tocar Nota</button>
+            <div class="scale-row" id="scaleBtns">
+              <button class="sc-btn active" onclick="setNote(0)">Do</button>
+              <button class="sc-btn" onclick="setNote(1)">Re</button>
+              <button class="sc-btn" onclick="setNote(2)">Mi</button>
+              <button class="sc-btn" onclick="setNote(3)">Fa</button>
+              <button class="sc-btn" onclick="setNote(4)">Sol</button>
+              <button class="sc-btn" onclick="setNote(5)">La</button>
+              <button class="sc-btn" onclick="setNote(6)">Si</button>
+              <button class="sc-btn" onclick="setNote(7)">Do'</button>
+            </div>
+            <div class="hint-nb">Toca los agujeros dorados o elige una nota</div>
+          </div>
+        </div>
+        <div class="page-footer" style="left:62px">9</div>
+      </div>
+    </div>
+
+    <!-- P6 LEFT: Fórmulas -->
+    <div class="nb-page" id="p6L">
+      <div class="page-content">
+        <div class="pg-header"><span class="sec-label">✏️ Sección 06</span><span class="pg-num">11</span></div>
+        <div class="nb-title">9. Factores de la Frecuencia</div>
+        <div class="notebox blue"><strong>Longitud (L):</strong> Mayor longitud → menor frecuencia (inv. proporcional).</div>
+        <div class="notebox blue"><strong>Velocidad (v):</strong> v ≈ 331 + 0.6·T m/s (T en °C).</div>
+        <div class="notebox blue"><strong>Armónico (n):</strong> Mayor n → mayor frecuencia.</div>
+        <span class="nb-sub">10. Resumen de Fórmulas</span>
+        <div class="formula-nb">
+          <div class="f">Tubo Abierto: fₙ = n·(v/2L)</div>
+          <div class="fl">λₙ = 2L/n &nbsp;|&nbsp; n = 1, 2, 3, 4…</div>
+        </div>
+        <div class="formula-nb orange">
+          <div class="f">Tubo Cerrado: fₙ = (2n−1)·(v/4L)</div>
+          <div class="fl">λₙ = 4L/(2n−1) &nbsp;|&nbsp; n = 1, 2, 3… (impares)</div>
+        </div>
+        <span class="nb-sub">Problema: Tubo de Órgano</span>
+        <p class="nb">Frecs. adyacentes cerrado: 550 Hz y 650 Hz. Hallar f₁ y L (v = 340 m/s).</p>
+        <div class="notebox">2f₁ = 650 − 550 = 100 Hz → <strong>f₁ = 50 Hz</strong><br>L = v/4f₁ = 340/200 = <strong>1.7 m</strong></div>
+        <div class="sticky teal">🎓 Elaborado por <strong>Tiara Santana</strong> · Física Interactiva</div>
+        <div class="page-footer" style="left:62px">11</div>
+      </div>
+    </div>
+
+  </div><!-- left page -->
+
+  <!-- ═══ SPIRAL ═══ -->
+  <div class="spiral-wrap" id="spiralWrap"></div>
+
+  <!-- ═══ RIGHT PAGE ═══ -->
+  <div class="page-right-outer">
+  <div class="page-right-inner" id="rightPage">
+
+    <!-- P0 RIGHT: TOC -->
+    <div class="nb-page active" id="p0R">
+      <div class="toc-right">
+        <div class="toc-title">📋 Índice de Contenidos</div>
+        <div class="toc-item" onclick="goPage(1)"><div class="tn">1</div>Introducción y Ondas Estacionarias</div>
+        <div class="toc-item" onclick="goPage(2)"><div class="tn">2</div>Tubo Abierto — Armónicos</div>
+        <div class="toc-item" onclick="goPage(3)"><div class="tn">3</div>Tubo Cerrado y Comparación</div>
+        <div class="toc-item" onclick="goPage(4)"><div class="tn">4</div>Instrumentos Musicales de Viento</div>
+        <div class="toc-item" onclick="goPage(5)"><div class="tn">5</div>🎵 Simulador de Flauta Dulce</div>
+        <div class="toc-item" onclick="goPage(6)"><div class="tn">6</div>Clasificación y Fórmulas</div>
+        <button class="start-nb" onclick="goPage(1)">▶ Comenzar el Cuaderno</button>
+        <div style="margin-top:14px">
+          <span class="sim-lbl">Vista previa — Simulador de ondas</span>
+          <div class="sim-wrap">
+            <div class="sim-head">🎛 Ondas Estacionarias</div>
+            <div class="sim-body">
+              <div class="tube-type-row">
+                <div class="tbtn active" id="btnA" onclick="setTubeType('abierto')">⬅▶ Abierto</div>
+                <div class="tbtn" id="btnC" onclick="setTubeType('cerrado')">⬅■ Cerrado</div>
+              </div>
+              <canvas id="tubeCanvas" height="78"></canvas>
+              <div class="harm-row">
+                <span class="sim-lbl" style="margin:0">Armónico:</span>
+                <button class="hbtn" onclick="changeHarmonic(-1)">−</button>
+                <div id="harmNum">1</div>
+                <button class="hbtn" onclick="changeHarmonic(1)">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="page-footer" style="right:52px">2</div>
+      </div>
+    </div>
+
+    <!-- P1 RIGHT: Simulador ondas -->
+    <div class="nb-page" id="p1R">
+      <div class="page-content-right">
+        <div class="pg-header"><span class="sec-label">Simulador Interactivo</span><span class="pg-num">2</span></div>
+        <div class="sim-wrap">
+          <div class="sim-head">🎛 Ondas Estacionarias — Tubos</div>
+          <div class="sim-body">
+            <div class="sim-lbl">Tipo de Tubo</div>
+            <div class="tube-type-row">
+              <div class="tbtn active" id="btnA2" onclick="setTubeType('abierto')">⬅▶ Abierto-Abierto</div>
+              <div class="tbtn" id="btnC2" onclick="setTubeType('cerrado')">⬅■ Cerrado-Abierto</div>
+            </div>
+            <canvas id="tubeCanvas2" height="78"></canvas>
+            <div class="harm-row">
+              <span class="sim-lbl" style="margin:0">Armónico (n):</span>
+              <button class="hbtn" onclick="changeHarmonic(-1)">−</button>
+              <div id="harmNum2">1</div>
+              <button class="hbtn" onclick="changeHarmonic(1)">+</button>
+            </div>
+          </div>
+        </div>
+        <span class="nb-sub">¿Qué observas?</span>
+        <div class="notebox blue">Para n=1: tubo abierto tiene ½λ, el cerrado tiene ¼λ dentro del tubo.</div>
+        <div class="notebox blue">Al aumentar n aparecen más nodos y antinodos. Cada armónico es un <em>modo de vibración</em> distinto.</div>
+        <div class="notebox blue">En el tubo <strong>cerrado</strong>, al aumentar n=2 salta al 3.er armónico (impar), no al 2.°.</div>
+        <div class="sticky">🔬 Cambia el armónico y el tipo de tubo. En el cerrado solo aparecen los impares: 1°, 3°, 5°…</div>
+        <div class="page-footer" style="right:52px">2</div>
+      </div>
+    </div>
+
+    <!-- P2 RIGHT -->
+    <div class="nb-page" id="p2R">
+      <div class="page-content-right">
+        <div class="pg-header"><span class="sec-label">Sección 02 cont.</span><span class="pg-num">4</span></div>
+        <div class="nb-title">Tubo Abierto — Ejemplo</div>
+        <div class="notebox blue">
+          <strong>Datos:</strong> L = 0.5 m, v = 340 m/s<br>
+          f₁ = 340/(2×0.5) = <strong>340 Hz</strong><br>
+          f₂ = 680 Hz &nbsp;|&nbsp; f₃ = 1020 Hz
+        </div>
+        <span class="nb-sub">6. Cilíndricos vs Cónicos</span>
+        <div class="notebox"><strong>🎵 Cilíndricos:</strong> Diámetro constante. Cerrado → solo impares (Clarinete).</div>
+        <div class="notebox"><strong>📯 Cónicos:</strong> Se ensanchan. Tubo cónico cerrado (Saxofón) → todos los armónicos.</div>
+        <div class="sticky teal">📌 Tubo cónico cerrado ≈ Tubo cilíndrico abierto.</div>
+        <span class="nb-sub">Armónicos del Tubo Cerrado</span>
+        <table class="nb-table">
+          <tr><th>n</th><th>Armónico</th><th>Frecuencia</th></tr>
+          <tr><td>1</td><td>1.er (fundamental)</td><td>f₁ = v/4L</td></tr>
+          <tr><td>2</td><td>3.er armónico</td><td>f₂ = 3v/4L</td></tr>
+          <tr><td>3</td><td>5.° armónico</td><td>f₃ = 5v/4L</td></tr>
+        </table>
+        <div class="page-footer" style="right:52px">4</div>
+      </div>
+    </div>
+
+    <!-- P3 RIGHT -->
+    <div class="nb-page" id="p3R">
+      <div class="page-content-right">
+        <div class="pg-header"><span class="sec-label">Sección 03 cont.</span><span class="pg-num">6</span></div>
+        <div class="nb-title">Clasificación por Forma</div>
+        <div class="instr-row">
+          <div class="instr-card"><div class="ic-name">🎵 Cil. Abierto</div><div class="ic-type">Flauta traversa</div><span class="ic-badge todos">Todos</span></div>
+          <div class="instr-card"><div class="ic-name">🎵 Cil. Cerrado</div><div class="ic-type">Clarinete</div><span class="ic-badge impares">Solo impares</span></div>
+        </div>
+        <div class="instr-row">
+          <div class="instr-card"><div class="ic-name">🎷 Cón. Cerrado</div><div class="ic-type">Saxofón</div><span class="ic-badge todos">Todos</span></div>
+          <div class="instr-card"><div class="ic-name">🎺 Cónico</div><div class="ic-type">Trompeta</div><span class="ic-badge todos">Todos</span></div>
+        </div>
+        <span class="nb-sub">Tubos de Órgano</span>
+        <div class="notebox"><strong>De labio:</strong> Abiertos (brillantes, todos) o Tapados (oscuros, impares).</div>
+        <div class="notebox"><strong>De lengüeta:</strong> Sonido intenso por resonancia metálica + tubo.</div>
+        <div class="sticky">🎹 Tubo de órgano cerrado suena una octava más grave que el abierto de igual longitud.</div>
+        <div class="page-footer" style="right:52px">6</div>
+      </div>
+    </div>
+
+    <!-- P4 RIGHT -->
+    <div class="nb-page" id="p4R">
+      <div class="page-content-right">
+        <div class="pg-header"><span class="sec-label">Sección 04 cont.</span><span class="pg-num">8</span></div>
+        <div class="nb-title">8. Clasificación General</div>
+        <table class="nb-table">
+          <tr><th>Instrumento</th><th>Tubo / Exc.</th><th>Armónicos</th></tr>
+          <tr><td>🎵 Flauta</td><td>Cilíndrico / Bisel</td><td style="color:#0d7a6a;font-weight:800">Todos</td></tr>
+          <tr><td>🎵 Clarinete</td><td>Cilíndrico / Leng.</td><td style="color:#c0392b;font-weight:800">Impares</td></tr>
+          <tr><td>🎷 Saxofón</td><td>Cónico / Leng.</td><td style="color:#0d7a6a;font-weight:800">Todos</td></tr>
+          <tr><td>🎺 Trompeta</td><td>Cónico / Labio</td><td style="color:#0d7a6a;font-weight:800">Todos</td></tr>
+          <tr><td>🎹 Órgano cer.</td><td>Prismático</td><td style="color:#c0392b;font-weight:800">Impares</td></tr>
+        </table>
+        <span class="nb-sub">Flautas de Pan</span>
+        <p class="nb">Cada tubo da una nota única. La longitud determina f₁ = v/4L (cerrado) o v/2L (abierto).</p>
+        <span class="nb-sub">7.6 Pitos y Silbatos</span>
+        <p class="nb">Tubos simples de resonancia. Cerrados: solo impares. Abiertos: todos los armónicos.</p>
+        <div class="sticky pink">🎓 <strong>Tiara Santana</strong> · Física Interactiva<br>Msc. Néstor Fabio Montoya Palacios</div>
+        <div class="page-footer" style="right:52px">8</div>
+      </div>
+    </div>
+
+    <!-- P5 RIGHT -->
+    <div class="nb-page" id="p5R">
+      <div class="page-content-right">
+        <div class="pg-header"><span class="sec-label">Sección 05 cont.</span><span class="pg-num">10</span></div>
+        <div class="nb-title">Arte de la Flauta Dulce</div>
+        <span class="nb-sub">Mecanismo: Digitación</span>
+        <div class="notebox"><strong>Todos tapados:</strong> Lef = Lmáx → f mínima → nota más grave.</div>
+        <div class="notebox"><strong>Destapando de abajo ↑:</strong> Lef ↓ → f ↑ → notas más agudas.</div>
+        <div class="notebox"><strong>Horquilla:</strong> Fa#, Sib requieren combinaciones no lineales.</div>
+        <span class="nb-sub">Escala Do Mayor — Digitaciones</span>
+        <table class="nb-table" style="font-size:.7rem">
+          <tr><th>Nota</th><th>Agujeros abiertos</th><th>Frec.</th></tr>
+          <tr><td>Do</td><td>Ninguno</td><td>523 Hz</td></tr>
+          <tr><td>Re</td><td>6 y 7</td><td>587 Hz</td></tr>
+          <tr><td>Mi</td><td>5, 6 y 7</td><td>659 Hz</td></tr>
+          <tr><td>Fa</td><td>4, 5, 6 y 7</td><td>698 Hz</td></tr>
+          <tr><td>Sol</td><td>3, 4, 5, 6 y 7</td><td>784 Hz</td></tr>
+          <tr><td>La</td><td>2, 3, 4, 5, 6 y 7</td><td>880 Hz</td></tr>
+          <tr><td>Si</td><td>1 – 7</td><td>988 Hz</td></tr>
+          <tr><td>Do'</td><td>Todos abiertos</td><td>1047 Hz</td></tr>
+        </table>
+        <div class="sticky">🎼 Al destapar más agujeros la f aumenta → sonido más agudo. ¡Física en acción!</div>
+        <div class="page-footer" style="right:52px">10</div>
+      </div>
+    </div>
+
+    <!-- P6 RIGHT -->
+    <div class="nb-page" id="p6R">
+      <div class="page-content-right">
+        <div class="pg-header"><span class="sec-label">Sección 06 cont.</span><span class="pg-num">12</span></div>
+        <div class="nb-title">Conceptos Clave</div>
+        <div class="notebox">• Tubo abierto → antinodos en ambos extremos → todos los armónicos.</div>
+        <div class="notebox">• Tubo cerrado → nodo en ext. cerrado → solo armónicos impares.</div>
+        <div class="notebox">• Tubo cónico cerrado ≈ tubo cilíndrico abierto.</div>
+        <div class="notebox">• f₁(cerrado) = ½ f₁(abierto) de igual L → octava más grave.</div>
+        <span class="nb-sub">Resumen Final</span>
+        <table class="nb-table">
+          <tr><th>Instrumento</th><th>Tipo</th><th>Armónicos</th></tr>
+          <tr><td>Flauta</td><td>Cil. Abierto</td><td style="color:#0d7a6a;font-weight:800">Todos</td></tr>
+          <tr><td>Clarinete</td><td>Cil. Cerrado</td><td style="color:#c0392b;font-weight:800">Impares</td></tr>
+          <tr><td>Saxofón</td><td>Cón. Cerrado</td><td style="color:#0d7a6a;font-weight:800">Todos</td></tr>
+          <tr><td>Trompeta</td><td>Cón. Abierto</td><td style="color:#0d7a6a;font-weight:800">Todos</td></tr>
+          <tr><td>Órgano cer.</td><td>Prismático</td><td style="color:#c0392b;font-weight:800">Impares</td></tr>
+        </table>
+        <div class="sticky pink" style="margin-top:12px">
+          🎓 Cuaderno elaborado por <strong>Tiara Santana</strong><br>
+          Física Interactiva<br>
+          Msc. Néstor Fabio Montoya Palacios
+        </div>
+        <div class="page-footer" style="right:52px">12</div>
+      </div>
+    </div>
+
+  </div><!-- page-right-inner -->
+  </div><!-- page-right-outer -->
+
+  <!-- RIGHT COVER -->
+  <div class="right-cover"></div>
+
+</div><!-- notebook -->
+</div><!-- desk-wrap -->
+
+<!-- NAV -->
+<div class="nb-nav">
+  <button class="nav-btn" id="btnPrev" onclick="goPage(currentPage-1)" disabled>← Anterior</button>
+  <div class="page-dots" id="pageDots"></div>
+  <button class="nav-btn" id="btnNext" onclick="goPage(currentPage+1)">Siguiente →</button>
+</div>
+
+<script>
+// ═══ SPIRAL ═══
+(function(){
+  const sw=document.getElementById('spiralWrap');
+  for(let i=0;i<24;i++){const c=document.createElement('div');c.className='coil';sw.appendChild(c);}
+})();
+
+// ═══ DOTS ═══
+const TOTAL=7;
+const dotsWrap=document.getElementById('pageDots');
+for(let i=0;i<TOTAL;i++){
+  const d=document.createElement('div');
+  d.className='pdot'+(i===0?' active':'');
+  d.onclick=()=>goPage(i);
+  dotsWrap.appendChild(d);
+}
+
+// ═══ NAVIGATION ═══
+let currentPage=0;
+function goPage(n){
+  if(n<0||n>=TOTAL)return;
+  document.querySelectorAll('.nb-page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.pdot').forEach((d,i)=>d.classList.toggle('active',i===n));
+  document.getElementById('p'+n+'L').classList.add('active');
+  document.getElementById('p'+n+'R').classList.add('active');
+  currentPage=n;
+  document.getElementById('btnPrev').disabled=(n===0);
+  document.getElementById('btnNext').disabled=(n===TOTAL-1);
+}
+
+// ═══ TUBE SIMULATOR ═══
+let tubeType='abierto', harmonic=1, tubeT=0, tubeRaf=null;
+
+function setTubeType(t){
+  tubeType=t;
+  ['btnA','btnA2'].forEach(id=>{const e=document.getElementById(id);if(e)e.classList.toggle('active',t==='abierto');});
+  ['btnC','btnC2'].forEach(id=>{const e=document.getElementById(id);if(e)e.classList.toggle('active',t==='cerrado');});
+  if(t==='cerrado'&&harmonic%2===0)harmonic=1;
+  ['harmNum','harmNum2'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=harmonic;});
+}
+function changeHarmonic(d){
+  let h=harmonic;
+  if(tubeType==='cerrado'){h+=d*2;if(h<1)h=1;if(h>9)h=9;}
+  else{h+=d;if(h<1)h=1;if(h>8)h=8;}
+  harmonic=h;
+  ['harmNum','harmNum2'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=h;});
+}
+function drawTube(id){
+  const c=document.getElementById(id);
+  if(!c||!c.offsetWidth)return;
+  const W=c.offsetWidth;c.width=W;
+  const H=c.height,mid=H/2,amp=H*.32,n=harmonic,open=tubeType==='abierto';
+  const ctx=c.getContext('2d');
+  ctx.clearRect(0,0,W,H);
+  // walls
+  ctx.fillStyle='rgba(214,58,110,0.06)';
+  ctx.fillRect(0,mid-amp-9,W,9);ctx.fillRect(0,mid+amp,W,9);
+  if(!open){ctx.fillStyle='rgba(212,105,10,0.22)';ctx.fillRect(0,mid-amp-9,9,amp*2+18);}
+  // wave
+  const grd=ctx.createLinearGradient(0,0,W,0);
+  grd.addColorStop(0,'#1a6ef5');grd.addColorStop(1,'#0099cc');
+  ctx.strokeStyle=grd;ctx.lineWidth=2;ctx.beginPath();
+  for(let x=0;x<=W;x++){
+    const p=x/W;
+    const y=open?mid-amp*Math.sin(n*Math.PI*p)*Math.cos(tubeT):mid-amp*Math.sin((2*n-1)*Math.PI/2*p)*Math.cos(tubeT);
+    x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+  // envelope
+  ctx.strokeStyle='rgba(26,110,245,0.12)';ctx.lineWidth=1;ctx.setLineDash([3,3]);
+  for(const s of[1,-1]){
+    ctx.beginPath();
+    for(let x=0;x<=W;x++){
+      const p=x/W;
+      const y=open?mid+s*amp*Math.sin(n*Math.PI*p):mid+s*amp*Math.sin((2*n-1)*Math.PI/2*p);
+      x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+  }
+  ctx.setLineDash([]);
+  ctx.font='bold 9px Caveat';
+  if(open){ctx.fillStyle='#1a6ef5';ctx.fillText('A',3,mid-amp-2);ctx.fillText('A',W-12,mid-amp-2);}
+  else{ctx.fillStyle='#999';ctx.fillText('N',2,mid-amp-2);ctx.fillStyle='#d4690a';ctx.fillText('A',W-12,mid-amp-2);}
+}
+(function loop(){tubeT+=0.038;drawTube('tubeCanvas');drawTube('tubeCanvas2');requestAnimationFrame(loop);})();
+
+// ═══ WAVE VIS ═══
+let wT=0;
+(function wloop(){
+  const c=document.getElementById('waveVis');
+  if(c&&c.offsetWidth){
+    const W=c.offsetWidth;c.width=W;c.height=46;
+    const ctx=c.getContext('2d');ctx.clearRect(0,0,W,46);
+    const g=ctx.createLinearGradient(0,0,W,0);
+    g.addColorStop(0,'rgba(26,110,245,0)');g.addColorStop(.5,'rgba(26,110,245,0.55)');g.addColorStop(1,'rgba(26,110,245,0)');
+    ctx.strokeStyle=g;ctx.lineWidth=2;ctx.beginPath();
+    for(let x=0;x<=W;x++){const y=23+18*Math.sin(2*Math.PI*x/W*3+wT)*Math.sin(Math.PI*x/W);x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+    ctx.stroke();
+  }
+  wT+=0.04;requestAnimationFrame(wloop);
+})();
+
+// ═══ FLUTE AUDIO ═══
+let audioCtx=null,audioReady=false,currentNote=0,isPlaying=false,oscNodes=null,gainNode=null;
+const NOTES=[
+  {name:'Do',  freq:523.25,holes:[false,false,false,false,false,false,false]},
+  {name:'Re',  freq:587.33,holes:[false,false,false,false,false,true, true ]},
+  {name:'Mi',  freq:659.25,holes:[false,false,false,false,true, true, true ]},
+  {name:'Fa',  freq:698.46,holes:[false,false,false,true, true, true, true ]},
+  {name:'Sol', freq:783.99,holes:[false,false,true, true, true, true, true ]},
+  {name:'La',  freq:880.00,holes:[false,true, true, true, true, true, true ]},
+  {name:'Si',  freq:987.77,holes:[true, true, true, true, true, true, true ]},
+  {name:"Do'", freq:1046.5,holes:[true, true, true, true, true, true, true ]},
+];
+function activateAudio(){
+  audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  audioReady=true;
+  const btn=document.getElementById('activateBtn');
+  btn.textContent='✓ Activo';btn.classList.add('done');btn.disabled=true;
+  setNote(0);
+}
+function setNote(idx){
+  currentNote=idx;
+  const note=NOTES[idx];
+  document.getElementById('noteDisplay').textContent=note.name;
+  const open=note.holes.filter(h=>h).length;
+  document.getElementById('freqDisplay').textContent=note.freq.toFixed(2)+' Hz · '+open+' agujero(s) abierto(s)';
+  note.holes.forEach((o,i)=>{
+    const el=document.getElementById('h'+i);
+    if(el){el.classList.toggle('open',o);el.classList.toggle('closed',!o);}
+  });
+  document.querySelectorAll('.sc-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
+  if(isPlaying){stopNote();setTimeout(playCurrentNote,80);}
+}
+function playCurrentNote(){
+  if(!audioReady){alert('Primero activa el sonido ▶');return;}
+  if(isPlaying){stopNote();return;}
+  const note=NOTES[currentNote];
+  gainNode=audioCtx.createGain();
+  gainNode.gain.setValueAtTime(0,audioCtx.currentTime);
+  gainNode.gain.linearRampToValueAtTime(0.26,audioCtx.currentTime+0.06);
+  gainNode.connect(audioCtx.destination);
+  const amps=[0.6,0.22,0.09,0.04,0.015];
+  const nodes=[];
+  amps.forEach((a,i)=>{
+    const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+    o.type='sine';o.frequency.value=note.freq*(i+1);g.gain.value=a;
+    o.connect(g);g.connect(gainNode);o.start();nodes.push({o});
+  });
+  const vib=audioCtx.createOscillator(),vibG=audioCtx.createGain();
+  vib.frequency.value=5.5;vibG.gain.value=note.freq*0.004;
+  vib.connect(vibG);nodes.forEach(({o})=>vibG.connect(o.frequency));vib.start();nodes.push({o:vib});
+  oscNodes=nodes;isPlaying=true;
+  const btn=document.getElementById('playBtn');btn.textContent='⏹ Detener';btn.classList.add('playing');
+  setTimeout(stopNote,2500);
+}
+function stopNote(){
+  if(!isPlaying||!oscNodes)return;
+  gainNode.gain.linearRampToValueAtTime(0,audioCtx.currentTime+0.1);
+  setTimeout(()=>{oscNodes.forEach(({o})=>{try{o.stop();}catch(e){}});oscNodes=null;},150);
+  isPlaying=false;
+  const btn=document.getElementById('playBtn');btn.textContent='▶ Tocar Nota';btn.classList.remove('playing');
+}
+document.querySelectorAll('.hole-c').forEach((el,i)=>{
+  el.addEventListener('click',()=>{
+    const holes=[...NOTES[currentNote].holes];holes[i]=!holes[i];
+    let best=0,bestScore=999;
+    NOTES.forEach((n,j)=>{let d=0;n.holes.forEach((h,k)=>{if(h!==holes[k])d++;});if(d<bestScore){bestScore=d;best=j;}});
+    setNote(best);
+  });
+});
+</script>
+</body>
+</html>
